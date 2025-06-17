@@ -67,6 +67,7 @@ public class OwnerUseCase {
             throw new OwnerRoleNotFoundException();
         }
 
+        System.out.println("OwnerRole: " + ownerRole.toString());
         // Crear nuevo usuario con datos finales
         User newUser = new User(
                 null,
