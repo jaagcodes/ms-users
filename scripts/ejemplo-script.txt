@@ -1,0 +1,2 @@
+cd /c/Cursos/SpringBoot/usuarios_plazoleta
+./scripts/feature-flow.sh crear-restaurante 02 v1.1 "Historias semana 2 completadas"
