@@ -16,7 +16,7 @@ public class UserEntityMapper {
         entity.setBirthDate(user.getBirthDate());
         entity.setEmail(user.getEmail());
         entity.setPassword(user.getPassword());
-        // role se asigna aparte
+        entity.setRole(new RoleEntityMapper().toEntity(user.getRole()));
         return entity;
     }
 
