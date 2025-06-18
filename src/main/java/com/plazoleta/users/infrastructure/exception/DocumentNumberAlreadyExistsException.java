@@ -1,7 +1,9 @@
 package com.plazoleta.users.infrastructure.exception;
 
-public class DocumentNumberAlreadyExistsException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class DocumentNumberAlreadyExistsException extends ApplicationException {
     public DocumentNumberAlreadyExistsException() {
-        super("Document number is already in use");
+        super("Document number is already in use", HttpStatus.CONFLICT);
     }
 }

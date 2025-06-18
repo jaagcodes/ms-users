@@ -1,7 +1,9 @@
 package com.plazoleta.users.infrastructure.exception;
 
-public class InvalidEmailFormatException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class InvalidEmailFormatException extends ApplicationException {
     public InvalidEmailFormatException() {
-        super("Invalid email format");
+        super("Invalid email format", HttpStatus.BAD_REQUEST);
     }
 }

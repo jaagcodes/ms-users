@@ -1,7 +1,9 @@
 package com.plazoleta.users.infrastructure.exception;
 
-public class EmailAlreadyExistsException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class EmailAlreadyExistsException extends ApplicationException {
     public EmailAlreadyExistsException() {
-        super("Email is already in use");
+        super("Email is already in use", HttpStatus.CONFLICT);
     }
 }

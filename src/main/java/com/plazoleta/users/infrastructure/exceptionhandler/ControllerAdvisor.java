@@ -9,44 +9,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerAdvisor {
 
-    @ExceptionHandler(InvalidEmailFormatException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidEmailFormat() {
-        return buildResponse(HttpStatus.BAD_REQUEST, "Invalid email format");
-    }
 
-    @ExceptionHandler(InvalidPasswordFormatException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidPasswordFormat() {
-        return buildResponse(HttpStatus.BAD_REQUEST, "Password format is invalid");
-    }
-
-    @ExceptionHandler(InvalidDocumentFormatException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidDocumentFormat() {
-        return buildResponse(HttpStatus.BAD_REQUEST, "Document number must be numeric");
-    }
-
-    @ExceptionHandler(InvalidPhoneFormatException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidPhoneFormat() {
-        return buildResponse(HttpStatus.BAD_REQUEST, "Phone number format is invalid");
-    }
-
-    @ExceptionHandler(UnderAgeUserException.class)
-    public ResponseEntity<ErrorResponse> handleUnderageUser() {
-        return buildResponse(HttpStatus.BAD_REQUEST, "User must be over 18 years old");
-    }
-
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleEmailAlreadyExists() {
-        return buildResponse(HttpStatus.CONFLICT, "Email is already in use");
-    }
-
-    @ExceptionHandler(DocumentNumberAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleDocumentNumberAlreadyExists() {
-        return buildResponse(HttpStatus.CONFLICT, "Document number is already in use");
-    }
-
-    @ExceptionHandler(OwnerRoleNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleOwnerRoleNotFound() {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "OWNER role not found in database");
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ErrorResponse> handleApplicationExceptions(ApplicationException ex) {
+        return buildResponse(ex.getStatus(), ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

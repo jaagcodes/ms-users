@@ -1,8 +1,11 @@
 package com.plazoleta.users.infrastructure.configuration;
 
+import com.plazoleta.users.domain.api.IOwnerServicePort;
+import com.plazoleta.users.domain.api.IUserServicePort;
 import com.plazoleta.users.domain.usecase.OwnerUseCase;
 import com.plazoleta.users.domain.spi.IRolePersistencePort;
 import com.plazoleta.users.domain.spi.IUserPersistencePort;
+import com.plazoleta.users.domain.usecase.UserUseCase;
 import com.plazoleta.users.infrastructure.output.jpa.adapter.RoleJpaAdapter;
 import com.plazoleta.users.infrastructure.output.jpa.adapter.UserJpaAdapter;
 import com.plazoleta.users.infrastructure.output.jpa.mapper.RoleEntityMapper;
@@ -42,10 +45,15 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public OwnerUseCase ownerUseCase(IUserPersistencePort userPersistencePort,
-                                     IRolePersistencePort rolePersistencePort,
-                                     BCryptPasswordEncoder passwordEncoder) {
+    public IOwnerServicePort ownerServicePort(IUserPersistencePort userPersistencePort,
+                                              IRolePersistencePort rolePersistencePort,
+                                              BCryptPasswordEncoder passwordEncoder) {
         return new OwnerUseCase(userPersistencePort, rolePersistencePort, passwordEncoder);
+    }
+
+    @Bean
+    public IUserServicePort userServicePort(IUserPersistencePort userPersistencePort) {
+        return new UserUseCase(userPersistencePort);
     }
 
 
