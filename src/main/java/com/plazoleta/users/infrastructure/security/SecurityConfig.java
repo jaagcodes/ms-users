@@ -13,11 +13,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // desactiva CSRF para pruebas con Postman
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/owners").permitAll() // permite acceso sin autenticación
-                        .anyRequest().authenticated()
-                )
-                .httpBasic(Customizer.withDefaults()); // o .formLogin() si usas formularios
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
 
         return http.build();
     }

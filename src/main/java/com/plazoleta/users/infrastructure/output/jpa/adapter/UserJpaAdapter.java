@@ -8,6 +8,8 @@ import com.plazoleta.users.infrastructure.output.jpa.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class UserJpaAdapter implements IUserPersistencePort {
@@ -29,5 +31,18 @@ public class UserJpaAdapter implements IUserPersistencePort {
     @Override
     public boolean existsByDocumentNumber(String documentNumber) {
         return userRepository.existsByDocumentNumber(documentNumber);
+    }
+
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .map(userEntityMapper::toDomain)
+                .orElse(null);
+        /*
+        Optional<UserEntity> entityOpt = userRepository.findById(id);
+        System.out.println("findById(" + id + ") => present? " + entityOpt.isPresent());
+        entityOpt.ifPresent(entity -> System.out.println("entity found: " + entity));
+        return entityOpt.map(userEntityMapper::toDomain).orElse(null);
+         */
     }
 }

@@ -19,56 +19,64 @@ class ControllerAdvisorTest {
 
     @Test
     void handleInvalidEmailFormat_shouldReturnBadRequest() {
-        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleInvalidEmailFormat();
+        ApplicationException ex = new InvalidEmailFormatException();
+        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleApplicationExceptions(ex);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Invalid email format", response.getBody().getMessage());
     }
 
     @Test
     void handleInvalidDocumentFormat_shouldReturnBadRequest() {
-        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleInvalidDocumentFormat();
+        ApplicationException ex = new InvalidDocumentFormatException();
+        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleApplicationExceptions(ex);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Document number must be numeric", response.getBody().getMessage());
     }
 
     @Test
     void handleInvalidPhoneFormat_shouldReturnBadRequest() {
-        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleInvalidPhoneFormat();
+        ApplicationException ex = new InvalidPhoneFormatException();
+        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleApplicationExceptions(ex);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Phone number format is invalid", response.getBody().getMessage());
     }
 
     @Test
     void handleInvalidPasswordFormat_shouldReturnBadRequest() {
-        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleInvalidPasswordFormat();
+        ApplicationException ex = new InvalidPasswordFormatException();
+        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleApplicationExceptions(ex);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Password format is invalid", response.getBody().getMessage());
     }
 
     @Test
     void handleUnderageUser_shouldReturnBadRequest() {
-        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleUnderageUser();
+        ApplicationException ex = new UnderAgeUserException();
+        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleApplicationExceptions(ex);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("User must be over 18 years old", response.getBody().getMessage());
     }
 
     @Test
     void handleEmailAlreadyExists_shouldReturnConflict() {
-        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleEmailAlreadyExists();
+        ApplicationException ex = new EmailAlreadyExistsException();
+        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleApplicationExceptions(ex);
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
         assertEquals("Email is already in use", response.getBody().getMessage());
     }
 
     @Test
     void handleDocumentNumberAlreadyExists_shouldReturnConflict() {
-        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleDocumentNumberAlreadyExists();
+        ApplicationException ex = new DocumentNumberAlreadyExistsException();
+        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleApplicationExceptions(ex);
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
         assertEquals("Document number is already in use", response.getBody().getMessage());
     }
 
     @Test
     void handleOwnerRoleNotFound_shouldReturnInternalServerError() {
-        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleOwnerRoleNotFound();
+        ApplicationException ex = new OwnerRoleNotFoundException();
+        ResponseEntity<ErrorResponse> response = controllerAdvisor.handleApplicationExceptions(ex);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertEquals("OWNER role not found in database", response.getBody().getMessage());
     }
@@ -89,3 +97,4 @@ class ControllerAdvisorTest {
         assertEquals("Unexpected error: Something went wrong", response.getBody().getMessage());
     }
 }
+

@@ -1,7 +1,9 @@
 package com.plazoleta.users.infrastructure.exception;
 
-public class UnderAgeUserException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class UnderAgeUserException extends ApplicationException {
     public UnderAgeUserException() {
-        super("User must be over 18 years old");
+        super("User must be over 18 years old", HttpStatus.BAD_REQUEST);
     }
 }

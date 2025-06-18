@@ -2,8 +2,8 @@ package com.plazoleta.users.application.handler;
 
 import com.plazoleta.users.application.dto.CreateOwnerRequest;
 import com.plazoleta.users.application.mapper.OwnerRequestMapper;
+import com.plazoleta.users.domain.api.IOwnerServicePort;
 import com.plazoleta.users.domain.model.User;
-import com.plazoleta.users.domain.usecase.OwnerUseCase;
 import com.plazoleta.users.infrastructure.exception.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 class OwnerHandlerTest {
 
     @Mock
-    private OwnerUseCase ownerUseCase;
+    private IOwnerServicePort ownerServicePort;
 
     @Mock
     private OwnerRequestMapper ownerRequestMapper;
@@ -60,17 +60,17 @@ class OwnerHandlerTest {
     @Test
     void shouldCreateOwnerSuccessfully() {
         when(ownerRequestMapper.toUser(validRequest)).thenReturn(mappedUser);
-        when(ownerUseCase.createOwner(mappedUser)).thenReturn(mappedUser); // ✅ uso correcto
+        when(ownerServicePort.createOwner(mappedUser)).thenReturn(mappedUser); // ✅ uso correcto
 
         ownerHandler.createOwner(validRequest);
 
-        verify(ownerUseCase).createOwner(mappedUser);
+        verify(ownerServicePort).createOwner(mappedUser);
     }
 
     @Test
     void shouldThrowInvalidEmailFormatException() {
         when(ownerRequestMapper.toUser(validRequest)).thenReturn(mappedUser);
-        when(ownerUseCase.createOwner(mappedUser)).thenThrow(new InvalidEmailFormatException());
+        when(ownerServicePort.createOwner(mappedUser)).thenThrow(new InvalidEmailFormatException());
 
         assertThrows(InvalidEmailFormatException.class, () -> ownerHandler.createOwner(validRequest));
     }
@@ -78,7 +78,7 @@ class OwnerHandlerTest {
     @Test
     void shouldThrowEmailAlreadyExistsException() {
         when(ownerRequestMapper.toUser(validRequest)).thenReturn(mappedUser);
-        when(ownerUseCase.createOwner(mappedUser)).thenThrow(new EmailAlreadyExistsException());
+        when(ownerServicePort.createOwner(mappedUser)).thenThrow(new EmailAlreadyExistsException());
 
         assertThrows(EmailAlreadyExistsException.class, () -> ownerHandler.createOwner(validRequest));
     }
@@ -86,7 +86,7 @@ class OwnerHandlerTest {
     @Test
     void shouldThrowOwnerRoleNotFoundException() {
         when(ownerRequestMapper.toUser(validRequest)).thenReturn(mappedUser);
-        when(ownerUseCase.createOwner(mappedUser)).thenThrow(new OwnerRoleNotFoundException());
+        when(ownerServicePort.createOwner(mappedUser)).thenThrow(new OwnerRoleNotFoundException());
 
         assertThrows(OwnerRoleNotFoundException.class, () -> ownerHandler.createOwner(validRequest));
     }

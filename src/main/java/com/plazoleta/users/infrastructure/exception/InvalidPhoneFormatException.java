@@ -1,7 +1,9 @@
 package com.plazoleta.users.infrastructure.exception;
 
-public class InvalidPhoneFormatException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class InvalidPhoneFormatException extends ApplicationException {
     public InvalidPhoneFormatException() {
-        super("Phone number format is invalid");
+        super("Phone number format is invalid", HttpStatus.BAD_REQUEST);
     }
 }

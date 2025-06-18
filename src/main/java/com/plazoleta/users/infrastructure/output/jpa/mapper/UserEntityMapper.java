@@ -30,7 +30,7 @@ public class UserEntityMapper {
                 entity.getBirthDate(),
                 entity.getEmail(),
                 entity.getPassword(),
-                null // rol se puede mapear si necesitas
+                new RoleEntityMapper().toDomain(entity.getRole())
         );
     }
 }

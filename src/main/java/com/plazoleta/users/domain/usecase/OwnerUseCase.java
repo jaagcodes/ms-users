@@ -1,5 +1,6 @@
 package com.plazoleta.users.domain.usecase;
 
+import com.plazoleta.users.domain.api.IOwnerServicePort;
 import com.plazoleta.users.domain.model.Role;
 import com.plazoleta.users.domain.model.User;
 import com.plazoleta.users.domain.spi.IRolePersistencePort;
@@ -10,7 +11,7 @@ import com.plazoleta.users.infrastructure.exception.*;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class OwnerUseCase {
+public class OwnerUseCase implements IOwnerServicePort {
 
     private final IUserPersistencePort userPersistencePort;
     private final IRolePersistencePort rolePersistencePort;

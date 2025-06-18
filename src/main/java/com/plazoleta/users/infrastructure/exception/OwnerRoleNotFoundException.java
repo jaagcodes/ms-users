@@ -1,7 +1,9 @@
 package com.plazoleta.users.infrastructure.exception;
 
-public class OwnerRoleNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class OwnerRoleNotFoundException extends ApplicationException {
     public OwnerRoleNotFoundException() {
-        super("OWNER role not found in database");
+        super("OWNER role not found in database", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

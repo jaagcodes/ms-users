@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 public class RoleEntityMapper {
 
     public Role toDomain(RoleEntity roleEntity) {
+        if (roleEntity == null) {
+            return null;
+        }
+
         return new Role(
                 roleEntity.getId(),
                 roleEntity.getName(),

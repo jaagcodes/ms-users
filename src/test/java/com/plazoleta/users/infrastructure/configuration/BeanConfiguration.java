@@ -1,5 +1,6 @@
 package com.plazoleta.users.infrastructure.configuration;
 
+import com.plazoleta.users.domain.api.IOwnerServicePort;
 import com.plazoleta.users.domain.spi.IRolePersistencePort;
 import com.plazoleta.users.domain.spi.IUserPersistencePort;
 import com.plazoleta.users.domain.usecase.OwnerUseCase;
@@ -51,13 +52,14 @@ class BeanConfigurationTest {
     }
 
     @Test
-    void ownerUseCaseBeanShouldBeCreated() {
+    void ownerServicePortBeanShouldBeCreated() {
         IUserPersistencePort userPort = mock(IUserPersistencePort.class);
         IRolePersistencePort rolePort = mock(IRolePersistencePort.class);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-        OwnerUseCase useCase = configuration.ownerUseCase(userPort, rolePort, encoder);
-        assertNotNull(useCase);
-        assertTrue(useCase instanceof OwnerUseCase);
+        assertTrue(
+                configuration.ownerServicePort(userPort, rolePort, encoder)
+                        instanceof OwnerUseCase
+        );
     }
 }

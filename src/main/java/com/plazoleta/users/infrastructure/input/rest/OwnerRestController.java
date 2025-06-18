@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/owners")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class OwnerRestController {
 
@@ -23,7 +23,7 @@ public class OwnerRestController {
             @ApiResponse(responseCode = "400", description = "Invalid request"),
             @ApiResponse(responseCode = "409", description = "User already exists")
     })
-    @PostMapping
+    @PostMapping("/owner")
     public ResponseEntity<Void> createOwner(@RequestBody CreateOwnerRequest request) {
         ownerHandler.createOwner(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
