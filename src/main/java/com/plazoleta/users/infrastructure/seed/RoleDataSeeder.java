@@ -18,15 +18,29 @@ public class RoleDataSeeder {
         if (!roleRepository.findByName("OWNER").isPresent()) {
             RoleEntity owner = new RoleEntity();
             owner.setName(RoleEnum.OWNER.getValue());
-            owner.setDescription("Propietario de restaurante");
+            owner.setDescription("Restaurant owner");
             roleRepository.save(owner);
         }
 
         if (!roleRepository.findByName("ADMIN").isPresent()) {
             RoleEntity admin = new RoleEntity();
             admin.setName(RoleEnum.ADMIN.getValue());
-            admin.setDescription("Administrador del sistema");
+            admin.setDescription("System administrator");
             roleRepository.save(admin);
+        }
+
+        if (!roleRepository.findByName("EMPLOYEE").isPresent()) {
+            RoleEntity employee = new RoleEntity();
+            employee.setName(RoleEnum.EMPLOYEE.getValue());
+            employee.setDescription("Restaurant Employee");
+            roleRepository.save(employee);
+        }
+
+        if (!roleRepository.findByName("CLIENT").isPresent()) {
+            RoleEntity client = new RoleEntity();
+            client.setName(RoleEnum.CLIENT.getValue());
+            client.setDescription("Restaurant Client");
+            roleRepository.save(client);
         }
 
         System.out.println("✅ Roles semilla insertados");
