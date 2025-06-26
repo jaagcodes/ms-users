@@ -26,7 +26,7 @@ class OwnerHandlerTest {
     private OwnerRequestMapper ownerRequestMapper;
 
     @InjectMocks
-    private OwnerHandler ownerHandler;
+    private UserHandler ownerHandler;
 
     private CreateOwnerRequest validRequest;
     private User mappedUser;

@@ -1,12 +1,17 @@
 package com.plazoleta.users.infrastructure.input.rest;
 
+import com.plazoleta.users.application.dto.CreateEmployeeRequest;
+import com.plazoleta.users.application.dto.CreateOwnerRequest;
 import com.plazoleta.users.application.handler.IUserHandler;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -19,5 +24,30 @@ public class UserRestController {
     public ResponseEntity<Boolean> validateOwner(@PathVariable Long id) {
         boolean isOwner = userHandler.isUserOwner(id);
         return ResponseEntity.ok(isOwner);
+    }
+
+    @Operation(summary = "Create a new owner")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Owner created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request"),
+            @ApiResponse(responseCode = "409", description = "User already exists")
+    })
+    @PostMapping("/owner")
+    public ResponseEntity<Void> createOwner(@RequestBody CreateOwnerRequest request) {
+        userHandler.createOwner(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Operation(summary = "Create a new employee")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Employee created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request"),
+            @ApiResponse(responseCode = "409", description = "User already exists")
+    })
+    @PostMapping("/employee")
+    @PreAuthorize("hasRole('OWNER')")
+    public ResponseEntity<Void> createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
+        userHandler.createEmployee(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

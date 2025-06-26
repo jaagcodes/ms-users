@@ -2,7 +2,7 @@ package com.plazoleta.users.infrastructure.input.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plazoleta.users.application.dto.CreateOwnerRequest;
-import com.plazoleta.users.application.handler.IOwnerHandler;
+import com.plazoleta.users.application.handler.IUserHandler;
 import com.plazoleta.users.infrastructure.exception.EmailAlreadyExistsException;
 import com.plazoleta.users.infrastructure.exception.InvalidEmailFormatException;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,9 +27,9 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(controllers = OwnerRestController.class)
-@Import(OwnerRestControllerTest.TestConfig.class)
-class OwnerRestControllerTest {
+@WebMvcTest(controllers = UserRestController.class)
+@Import(UsersRestControllerTest.TestConfig.class)
+class UsersRestControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,15 +38,15 @@ class OwnerRestControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private IOwnerHandler ownerHandler;
+    private IUserHandler ownerHandler;
 
     private CreateOwnerRequest validRequest;
 
     @TestConfiguration
     static class TestConfig {
         @Bean
-        public IOwnerHandler ownerHandler() {
-            return Mockito.mock(IOwnerHandler.class);
+        public IUserHandler ownerHandler() {
+            return Mockito.mock(IUserHandler.class);
         }
     }
 
