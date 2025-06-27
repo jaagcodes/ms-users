@@ -74,9 +74,10 @@ public class BeanConfiguration {
             IUserPersistencePort userPersistencePort,
             IRestaurantClientPort restaurantClientPort,
             IRolePersistencePort rolePersistencePort,
-            ISecurityServicePort securityServicePort
+            ISecurityServicePort securityServicePort,
+            BCryptPasswordEncoder passwordEncoder
     ) {
-        return new UserUseCase(userPersistencePort, restaurantClientPort, rolePersistencePort, securityServicePort);
+        return new UserUseCase(userPersistencePort, restaurantClientPort, rolePersistencePort, securityServicePort, passwordEncoder);
     }
 
     @Bean

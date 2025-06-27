@@ -1,7 +1,9 @@
 package com.plazoleta.users.application.handler;
 
+import com.plazoleta.users.application.dto.CreateClientRequest;
 import com.plazoleta.users.application.dto.CreateEmployeeRequest;
 import com.plazoleta.users.application.dto.CreateOwnerRequest;
+import com.plazoleta.users.application.mapper.ClientRequestMapper;
 import com.plazoleta.users.application.mapper.EmployeeRequestMapper;
 import com.plazoleta.users.application.mapper.OwnerRequestMapper;
 import com.plazoleta.users.domain.api.IOwnerServicePort;
@@ -20,6 +22,7 @@ public class UserHandler implements IUserHandler {
     private final IOwnerServicePort ownerServicePort;
     private final OwnerRequestMapper ownerRequestMapper;
     private final EmployeeRequestMapper employeeRequestMapper;
+    private final ClientRequestMapper clientRequestMapper;
 
     @Override
     public boolean isUserOwner(Long userId) {
@@ -36,4 +39,12 @@ public class UserHandler implements IUserHandler {
         User user = employeeRequestMapper.toUser(request);
         userServicePort.createEmployee(user, request.getRestaurantId());
     }
+
+    @Override
+    public User createClient(CreateClientRequest request) {
+        User user = clientRequestMapper.toUser(request);
+        return userServicePort.createClient(user);
+    }
+
+
 }

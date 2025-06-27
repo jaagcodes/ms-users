@@ -11,6 +11,7 @@ import com.plazoleta.users.infrastructure.exception.UserNotFoundException;
 import com.plazoleta.users.infrastructure.exception.UserRoleNotAssignedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserUseCase implements IUserServicePort {
 
@@ -19,17 +20,20 @@ public class UserUseCase implements IUserServicePort {
     private final IRestaurantClientPort restaurantClientPort;
     private final IRolePersistencePort rolePersistencePort;
     private final ISecurityServicePort securityServicePort;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public UserUseCase(
             IUserPersistencePort userPersistencePort,
             IRestaurantClientPort restaurantClientPort,
             IRolePersistencePort rolePersistencePort,
-            ISecurityServicePort securityServicePort
+            ISecurityServicePort securityServicePort,
+            BCryptPasswordEncoder passwordEncoder
     ) {
         this.userPersistencePort = userPersistencePort;
         this.restaurantClientPort = restaurantClientPort;
         this.rolePersistencePort = rolePersistencePort;
         this.securityServicePort = securityServicePort;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public boolean isUserOwner(Long userId) {
@@ -62,10 +66,21 @@ public class UserUseCase implements IUserServicePort {
             throw new UserRoleNotAssignedException();
         }
 
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+
         // 3. Asignar rol EMPLEADO
         user.setRole(rolePersistencePort.findByName(RoleEnum.EMPLOYEE.getValue()));
 
         // 4. Guardar usuario en la BD
+        return userPersistencePort.saveUser(user);
+    }
+
+    public User createClient(User user) {
+        logger.info("Client creation {} ", user);
+        user.setRole(rolePersistencePort.findByName(RoleEnum.CLIENT.getValue()));
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
         return userPersistencePort.saveUser(user);
     }
 }

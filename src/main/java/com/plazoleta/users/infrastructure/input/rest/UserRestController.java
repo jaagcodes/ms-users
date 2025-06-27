@@ -1,8 +1,10 @@
 package com.plazoleta.users.infrastructure.input.rest;
 
+import com.plazoleta.users.application.dto.CreateClientRequest;
 import com.plazoleta.users.application.dto.CreateEmployeeRequest;
 import com.plazoleta.users.application.dto.CreateOwnerRequest;
 import com.plazoleta.users.application.handler.IUserHandler;
+import com.plazoleta.users.domain.model.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -12,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
@@ -49,5 +54,14 @@ public class UserRestController {
     public ResponseEntity<Void> createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
         userHandler.createEmployee(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/client")
+    public ResponseEntity<Map<String, Object>> createClient(@Valid @RequestBody CreateClientRequest request) {
+        User client = userHandler.createClient(request);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "client created successfully");
+        response.put("client", client);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }
