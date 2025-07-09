@@ -38,6 +38,7 @@ public class UserRestController {
             @ApiResponse(responseCode = "409", description = "User already exists")
     })
     @PostMapping("/owner")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> createOwner(@RequestBody CreateOwnerRequest request) {
         userHandler.createOwner(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -64,4 +65,14 @@ public class UserRestController {
         response.put("client", client);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @GetMapping("/validate-employee")
+    public ResponseEntity<Boolean> validateEmployeeOfRestaurant(
+            @RequestParam Long employeeId,
+            @RequestParam Long restaurantId
+    ) {
+        boolean isEmployee = userHandler.isEmployeeOfRestaurant(employeeId, restaurantId);
+        return ResponseEntity.ok(isEmployee);
+    }
+
 }

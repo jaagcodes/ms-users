@@ -17,7 +17,8 @@ public class EmployeeRequestMapper {
                 null,
                 request.getEmail(),
                 request.getPassword(),
-                null // El rol se asigna dentro del use case
+                null, // El rol se asigna dentro del use case
+                request.getRestaurantId()
         );
     }
 }
