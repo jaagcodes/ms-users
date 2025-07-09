@@ -46,5 +46,10 @@ public class UserHandler implements IUserHandler {
         return userServicePort.createClient(user);
     }
 
+    @Override
+    public boolean isEmployeeOfRestaurant(Long employeeId, Long restaurantId) {
+        return userServicePort.isEmployeeOfRestaurant(employeeId, restaurantId);
+    }
+
 
 }

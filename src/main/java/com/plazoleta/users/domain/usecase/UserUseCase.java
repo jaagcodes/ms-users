@@ -83,4 +83,14 @@ public class UserUseCase implements IUserServicePort {
         user.setPassword(encryptedPassword);
         return userPersistencePort.saveUser(user);
     }
+
+    @Override
+    public boolean isEmployeeOfRestaurant(Long employeeId, Long restaurantId) {
+        User user = userPersistencePort.findById(employeeId);
+        if (user == null || user.getRestaurantId() == null) {
+            return false;
+        }
+        return user.getRestaurantId().equals(restaurantId);
+    }
+
 }

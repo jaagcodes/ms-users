@@ -26,4 +26,8 @@ public class UserEntity {
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = true)
     private RoleEntity role;
+
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", nullable = true)
+    private RestaurantEntity restaurant;
 }

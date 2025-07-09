@@ -1,6 +1,7 @@
 package com.plazoleta.users.infrastructure.output.jpa.mapper;
 
 import com.plazoleta.users.domain.model.User;
+import com.plazoleta.users.infrastructure.output.jpa.entity.RestaurantEntity;
 import com.plazoleta.users.infrastructure.output.jpa.entity.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +18,18 @@ public class UserEntityMapper {
         entity.setEmail(user.getEmail());
         entity.setPassword(user.getPassword());
         entity.setRole(new RoleEntityMapper().toEntity(user.getRole()));
+
+        if (user.getRestaurantId() != null) {
+            RestaurantEntity restaurant = new RestaurantEntity();
+            restaurant.setId(user.getRestaurantId());
+            entity.setRestaurant(restaurant);
+        }
+
         return entity;
     }
 
     public User toDomain(UserEntity entity) {
+        Long restaurantId = entity.getRestaurant() != null ? entity.getRestaurant().getId() : null;
         return new User(
                 entity.getId(),
                 entity.getFirstName(),
@@ -30,7 +39,8 @@ public class UserEntityMapper {
                 entity.getBirthDate(),
                 entity.getEmail(),
                 entity.getPassword(),
-                new RoleEntityMapper().toDomain(entity.getRole())
+                new RoleEntityMapper().toDomain(entity.getRole()),
+                restaurantId
         );
     }
 }
