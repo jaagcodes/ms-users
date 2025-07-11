@@ -51,5 +51,9 @@ public class UserHandler implements IUserHandler {
         return userServicePort.isEmployeeOfRestaurant(employeeId, restaurantId);
     }
 
+    @Override
+    public User findUserById(Long id) {
+        return userServicePort.findUserById(id);
+    }
 
 }
