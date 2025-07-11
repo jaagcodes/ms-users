@@ -93,4 +93,15 @@ public class UserUseCase implements IUserServicePort {
         return user.getRestaurantId().equals(restaurantId);
     }
 
+    @Override
+    public User findUserById(Long id) {
+        logger.info("[UserUseCase] find user by ID {} ", id);
+        User user = userPersistencePort.findById(id);
+        logger.info("[UserUseCase] find user by user {} ", user.toString());
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
+    }
+
 }

@@ -7,4 +7,5 @@ public interface IUserServicePort {
     User createEmployee(User user, Long restaurantId);
     User createClient(User user);
     boolean isEmployeeOfRestaurant(Long employeeId, Long restaurantId);
+    User findUserById(Long id);
 }

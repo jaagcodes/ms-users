@@ -11,4 +11,5 @@ public interface IUserHandler {
     void createEmployee(CreateEmployeeRequest request);
     User createClient(CreateClientRequest request);
     boolean isEmployeeOfRestaurant(Long employeeId, Long restaurantId);
+    User findUserById(Long id);
 }
